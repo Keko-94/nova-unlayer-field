@@ -26,6 +26,7 @@
 
             unlayerScript.onload = () => {
                 this.loadEditor();
+                this.loadDesign(this.options.design);
             };
             document.head.appendChild(unlayerScript);
         },
@@ -56,6 +57,9 @@
                 const config = {
                     ...options,
                     id: this.id,
+                    appearance : {
+                        theme: this.getNovaTheme()
+                    }
                 };
 
                 window.unlayer.init(config);
@@ -74,6 +78,9 @@
             exportHtml(callback) {
                 window.unlayer.exportHtml(callback);
             },
+            getNovaTheme() {
+                return localStorage.novaTheme ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+            }
         },
     }
 </script>
