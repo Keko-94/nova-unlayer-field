@@ -2,7 +2,7 @@
     <PanelItem :index="index" :field="field">
         <template #value>
             <div class="overflow-hidden">
-                <iframe :id="iframeId" sandbox="allow-scripts allow-same-origin" importance="low" width="100%"></iframe>
+                <iframe :id="iframeId" sandbox="allow-scripts allow-same-origin" importance="low" width="100%" height="800"></iframe>
             </div>
         </template>
     </PanelItem>
@@ -19,7 +19,6 @@ export default {
     mounted() {
         let iframe = document.getElementById(this.iframeId);
         this.setIframeContent(iframe, this.field.html || 'HTML is not set for preview, use <code>Unlayer::html()</code>');
-        this.resizeIFrameToFitContent(iframe)
     },
 
     methods: {
@@ -28,17 +27,8 @@ export default {
          * @param {string} htmlContent
          */
         setIframeContent: function (iframe, htmlContent) {
-            const container = document.createElement('div');
-            container.innerHTML = htmlContent;
-            iframe.contentWindow.document.body.appendChild(container);
+            iframe.srcdoc = '<div>' + htmlContent + '</div>';
         },
-
-        /**
-         * @param {HTMLIFrameElement} iframe
-         */
-        resizeIFrameToFitContent: function (iframe) {
-            iframe.height = iframe.contentWindow.document.body.scrollHeight;
-        }
     },
 }
 </script>
