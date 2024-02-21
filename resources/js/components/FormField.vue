@@ -1,5 +1,8 @@
 <template>
-    <DefaultField
+    <Readonly v-if="isReadonly"
+                 :field="field"
+    />
+    <DefaultField v-else
         :field="currentField"
         :errors="errors"
         :show-help-text="showHelpText"
@@ -35,6 +38,7 @@
 
 <script>
     import UnlayerEditor from './UnlayerEditor.vue';
+    import Readonly from './Readonly.vue';
     import { DependentFormField, HandlesValidationErrors } from 'laravel-nova'
 
     const defaultHeight = '700px';
@@ -44,6 +48,7 @@
 
         components: {
             UnlayerEditor,
+            Readonly
         },
 
         props: ['resourceName', 'resourceId', 'field'],
@@ -52,6 +57,9 @@
             containerHeight: function () {
                 return this.currentField.height || defaultHeight;
             },
+            isReadonly: function() {
+                return this.currentField.extraAttributes.readonly || false;
+            }
         },
 
         methods: {
