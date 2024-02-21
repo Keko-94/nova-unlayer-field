@@ -58,7 +58,10 @@
                 return this.currentField.height || defaultHeight;
             },
             isReadonly: function() {
-                return this.currentField.extraAttributes.readonly || false;
+                return
+                    this.currentField.readonly ||
+                    (this.currentField.hasOwnProperty('extraAttributes') && this.currentField.extraAttributes.hasOwnProperty('readonly') && this.currentField.extraAttributes.readonly) ||
+                    false
             }
         },
 
